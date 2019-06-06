@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Engineering Village API example - charting</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+</head>
+
+<body>
+    <div id="container" style="height: 400px; min-width: 600px; max-width: 800px; margin: 0 auto"><span
+            style="color:#c0c0c0; font-style: italic">Graph displays here...</span></div>
+
+    <script>
+        // Create chart data
+        var chartData = {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true
+                    },
+                    showInLegend: false
+                }
+            },
+            series: [{
+                name: 'Document types',
+                colorByPoint: true,
+                data: []
+            }]
+        };
+
+
+        //
+        // Create the chart when DOM is ready
+        //
+        $(document).ready(function () {
+            console.log("Calling top service to retrieve Compendex terms...")
+            // Run search using EV API
+            $.ajax({
+                    contentType: "application/json",		// Tells API to respond with JSON instead of XML
+                    dataType: "json", // Request JSONP from EV API
+                    method: "GET", // Plain old GET request
+                    headers: {'Access-Control-Allow-Origin': '*'},  // Disable CORS
+                    url: "http://127.0.0.1:8080/top"
+                })
+                // Handle unsuccessful call
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log("Request failed!  Status: " + jqXHR.status);
+                    $("#container").html("<b>ERROR<b> - request failed (" + jqXHR.status + " - " + jqXHR.state() + ").  ");
+                })
+
+                // Handle successful call
+                .done(function (data) {
+                    console.log("Request finised!");
+                    // Set chart title
+                    chartData.title.text = "" + data.PAGE["RESULTS-COUNT"] +
+                        " results found in <b>Compendex</b>";
+                    // Extract Document type navigator values from JSON response
+                    if (data.PAGE.TERMS != null) {
+                        for (i = 0; i < data.PAGE.TERMS.length; i++) {
+                            chartData.series[0].data.push({
+                                name: data.PAGE.TERMS[i].LABEL,
+                                y: Number(data.PAGE.TERMS[i].COUNT)
+                            });
+                        }
+                    };
+
+                    Highcharts.chart('container', chartData);
+                });
+        });
+    </script>
+</body>
+
+</html>

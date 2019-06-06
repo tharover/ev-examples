@@ -1,0 +1,17 @@
+{
+  "name": "node.ev.example",
+  "version": "1.0.0",
+  "description": "Sample express server to return EV API responses",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "debug": "nodemon --inspect app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.0"
+  }
+}
