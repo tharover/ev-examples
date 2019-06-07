@@ -20,6 +20,7 @@ This should initialize the project workspace.  The express and request libraries
 npm install express
 npm install request
 ```
+Now open the app.js file and replace the "apiKey" and "insttoken" variables with the values obtained from Elseiver support team.  
 
 The application should now be ready to run!  The [package.json](package.json) file contains script commands for running or debugging the application via "npm start" or "npm debug":
 
