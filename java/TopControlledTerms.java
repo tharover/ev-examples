@@ -1,5 +1,3 @@
-package ev.api.examples;
-
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,8 +25,8 @@ import org.w3c.dom.NodeList;
  *
  */
 public class TopControlledTerms {
-	private static String EV_API_KEY = "yourkeyhere";
-	private static String EV_API_INSTTOKEN = "yourtokenhere";
+	private static String EV_API_KEY = "YOUR_API_KEY";
+	private static String EV_API_INSTTOKEN = "YOUR_INST_TOKEN";
 	private static String EV_API_URL = "https://api.elsevier.com/content/ev/results?sortField=relevance&navigator=true&navigatorDataCount=[COUNT]&apiKey=[APIKEY]&insttoken=[INSTTOKEN]&query=[QUERY]";
 
 	public static void main(String[] args) {
@@ -66,6 +64,7 @@ public class TopControlledTerms {
 					.replace("[QUERY]", database + "%20WN%20db")
 					.replace("[COUNT]", count)
 					.replace("[INSTTOKEN]", EV_API_INSTTOKEN));
+					System.out.println("Requesting:  '" + url.toString());
 			conn = getHttpsURLConnection(url);
 
 			// Parse the XML to find "cvnav" entries in NAVIGATOR element
