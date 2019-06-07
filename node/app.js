@@ -26,6 +26,22 @@ app.get('/top', (req, res) => {
         });
 });
 
+//
+// Simple service to return the abstract for a given document ID.  Sample doc ID for testing:  cpx_30c22110ec3706374M6dda2061377553
+//
+app.get('/doc/:docid', (req, res) => {
+    request.get("https://api.elsevier.com/content/ev/records?&docId=" + req.params.docid + "&apiKey="+apiKey+"&insttoken="+insttoken, 
+        (error, response, body) => {
+            let results = JSON.parse(body);
+            if (error || results.PAGE['RESULTS-COUNT'] == 0) {
+                res.json(results);
+            } else {
+                res.json({"abstract": results.PAGE["PAGE-RESULTS"]["PAGE-ENTRY"][0]["EI-DOCUMENT"].DOCUMENTPROPERTIES.AB});
+            }
+        });
+});
+
+
 app.get('/graph', (req, res) => {
     res.sendFile(__dirname + "/graph.html");
 });

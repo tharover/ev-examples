@@ -1,8 +1,9 @@
 # Node.js Example
-This folder contains a very simple Node web server.  It facilitates to URLs - /top and /graph.
+This folder contains a very simple Node web server.  It facilitates 3 URLs - /top, /doc/:docid, and /graph.
 
-- /top: A simple service that returns the top 10 terms by result count for Compendex
-- /graph:  An example of rendering a graph (via [Highcharts.js](https://www.highcharts.com/demo/pie-basic)) using the /top service
+- /top - A simple service that returns the top 10 terms by result count for Compendex
+- /doc/:docid - A simple service that returns the abstract corresponding to a document ID
+- /graph -  An example of rendering a graph (via [Highcharts.js](https://www.highcharts.com/demo/pie-basic)) using the /top service
 
 ## Setup
 You must have a relatively newer version of [Node.js](https://nodejs.org/) and npm installed in order to run this sample.  The [nodemon](https://www.npmjs.com/package/nodemon) package is highly suggested as well.  Start by creating a new directory to host the project:
